@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<title>W3.CSS</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<body>
+<!--Calcular total al cambiar la cantidad o el precio, se multiplican. Nuevo input
+ con el total total hasta abajo de la página-->
+<title>Tiendita</title>
+<style>
+
+</style>
+<div class="w3-container">
+    <h2>Tiendita</h2>
+
+    <button onclick="agregarProducto()">Agregar producto</button>
+    <table class="w3-table-all w3-hoverable w3-margin-top">
+        <thead>
+        <tr class="w3-light-grey">
+            <th>Borrar</th>
+            <th>Producto</th>
+            <th>Cantidad</th>
+            <th>Precio</th>
+            <th>Total</th>
+        </tr>
+        </thead>
+        <tbody id="cuerpo_tabla">
+
+        </tbody>
+    </table>
+
+    <label for="tt" style="margin-left: 60% ">Gran total: </label>
+    <input id="tt" class="w3-margin-top"  type="number" readonly="true" style="background-color: lightgray" value="0">
+
+
+</div>
+
+<script>
+
+    function agregarProducto(){
+        const cuerpo_tabla = document.getElementById("cuerpo_tabla");
+
+        const td0 = document.createElement("td");
+        const td1 = document.createElement("td");
+        const td2 = document.createElement("td");
+        const td3 = document.createElement("td");
+        const td4 = document.createElement("td");
+
+        const b = document.createElement("button")
+        b.innerHTML = "X";
+        b.onclick = borrar;
+
+        const i1 = document.createElement("input");
+        const i2 = document.createElement("input");
+        i2.type = "number";
+        i2.className = "n";
+        i2.onchange = calcTotal;
+        i2.value = 0;
+
+        const i3 = document.createElement("input");
+        i3.type = "number";
+        i3.className = "n";
+        i3.onchange = calcTotal;
+        i3.value = 0;
+
+        const i4 = document.createElement("input");
+        i4.type="number";
+        //i4.readOnly= "true";
+        i4.style = "background-color: lightgray;";
+        i4.className = "totalito";
+        i4.value = 0;
+        i4.onchange = granTotal
+
+        td0.appendChild(b);
+        td1.appendChild(i1);
+        td2.appendChild(i2);
+        td3.appendChild(i3);
+        td4.appendChild(i4);
+
+        const tr = document.createElement("tr");
+        tr.appendChild(td0);
+        tr.appendChild(td1);
+        tr.appendChild(td2);
+        tr.appendChild(td3);
+        tr.appendChild(td4);
+        cuerpo_tabla.appendChild(tr);
+    }
+    function borrar(){
+        this.parentElement.parentElement.remove();
+        granTotal();
+    }
+
+    function calcTotal() {
+        const fila = this.parentElement.parentElement;
+        const campos = fila.getElementsByTagName("td");
+
+        const t = campos[4].getElementsByClassName("totalito")
+        const n1 = campos[2].getElementsByClassName("n")
+        const n2 = campos[3].getElementsByClassName("n")
+        t[0].value = n1[0].valueAsNumber * n2[0].valueAsNumber;
+        granTotal()
+    }
+
+    function granTotal() {
+        const listaTotales = document.getElementsByClassName("totalito");
+        let granTotal = 0;
+        for (let t of listaTotales){
+            granTotal += t.valueAsNumber;
+        }
+        document.getElementById("tt").value = granTotal;
+    }
+</script>
+</body>
+</html>
+
